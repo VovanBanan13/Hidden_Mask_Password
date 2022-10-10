@@ -15,29 +15,24 @@ class FileService {
 
     fun isFile(fileDirection: String) : Boolean {
         val filePath: Path = Paths.get(fileDirection)
-
-        if (Files.exists(filePath)) {
-            println("Найден файл: ${filePath.fileName}")
-            return true
-        } else {
-            println("Файл не найден")
-        }
-        return false
+        return Files.exists(filePath)
     }
 
     fun isTxt(fileName: String) : Boolean {
         val filePath: Path = Paths.get(fileName)
         val file = File(filePath.toString())
-        if (TXT.equals(file.extension, ignoreCase = true)) {
-            println("Расширение файла: ${file.extension}")
-            return true
-        }
-        return false
+        return (TXT.equals(file.extension, ignoreCase = true))
     }
 
     fun readTxtFile(fileName: String) =
         File(fileName).readText()
 
     fun writeTxtFile(fileDirection: String, text: String) =
-        File(fileDirection, "TodayTaskListChange.txt").writeText(text)
+        File(fileDirection).writeText(text)
+
+    fun replaceNewFileName(fileName: String) : String {
+        val fileDirection = fileName.substringBeforeLast(".")
+        val fileExtension = fileName.substringAfterLast(".")
+        return fileDirection + "_mask." + fileExtension
+    }
 }

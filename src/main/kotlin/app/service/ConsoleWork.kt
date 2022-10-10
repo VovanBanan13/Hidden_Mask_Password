@@ -9,12 +9,13 @@ class ConsoleWork : CommandLineRunner {
 
     @Autowired
     private val fileService: FileService? = null
+    private val replaceService: ReplaceService = ReplaceService()
 
     override fun run(vararg args: String?) {
         println("\n\t Начало работы приложения ")
 
         while (true) {
-            println("Чтобы распарсить файл, введите его путь")
+            println("\nЧтобы прочитать файл, введите его путь")
             println("Чтобы выйти из приложения, введите 'exit'")
 
             print("Ввод: ")
@@ -26,10 +27,19 @@ class ConsoleWork : CommandLineRunner {
             }
 
             if (entryStr != null && fileService?.isFile(entryStr) == true) {
-                println("OK")
-            } else println("OK, but not File")
+                if (fileService.isTxt(entryStr)) {
+                    println("Найден файл с расширением TXT")
+                    val text = fileService.readTxtFile(entryStr)
+                    if (!replaceService.isContainsPassword(text)) {
+                        println("В файле не содержатся пароли")
+                    } else {
+                        val textPassword = replaceService.replacePassword(text)
+                        fileService.writeTxtFile(fileService.replaceNewFileName(entryStr), textPassword)
+                        println("\nНовый файл со скрытым паролем создан")
+                        println("Путь сохранения: ${fileService.replaceNewFileName(entryStr)}")
+                    }
+                } else println("Файл не TXT, повторите попытку")
+            } else println("Файл не найден")
         }
     }
-
-
 }
