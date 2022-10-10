@@ -1,4 +1,4 @@
-package set
+package app.set
 
 val loginSet = setOf(
     "login",

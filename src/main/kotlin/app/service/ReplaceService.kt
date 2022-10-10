@@ -1,8 +1,8 @@
-package service
+package app.service
 
-import extension.contains
-import set.loginSet
-import set.passwordSet
+import app.extension.contains
+import app.set.loginSet
+import app.set.passwordSet
 
 class ReplaceService {
 

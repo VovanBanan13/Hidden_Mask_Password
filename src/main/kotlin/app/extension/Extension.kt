@@ -1,4 +1,4 @@
-package extension
+package app.extension
 
 fun String.contains(set: Set<String>, ignoreCase: Boolean = false): Boolean {
     val list = this.replace(Regex("[,.!?;:]"),"").split(" ")

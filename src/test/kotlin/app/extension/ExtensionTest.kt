@@ -1,4 +1,4 @@
-package extension
+package app.extension
 
 import org.junit.jupiter.api.Test
 
